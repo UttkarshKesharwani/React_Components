@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
+import useFetch from "./useFetch";
 
 const pageSize = 10;
 
 const Pagination = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [currPage, setCurrPage] = useState(0);
   const [perPageSize, setPerPageSize] = useState(pageSize);
 
-  useEffect(() => {
-    async function getData() {
-      console.log("called func");
-      const data = await fetch("https://dummyjson.com/products?limit=500");
-      const res = await data.json();
-      setProducts(res.products);
-    }
-    getData();
-  }, []);
+  const {products,error} = useFetch("https://dummyjson.com/products?limit=500")
 
-  const handleButtonClick = (e, idx) => {
+  const handleButtonClick = (idx) => {
     setCurrPage(idx);
   };
 
@@ -58,21 +51,37 @@ const Pagination = () => {
         )}
       </div>
       <div>
+        <button
+          className="ml-1 border p-0.5 rounded-md"
+          onClick={() => setCurrPage((prev) => prev - 1)}
+        >
+          &larr; previous{" "}
+        </button>
         {[...new Array(totalPages)].map((_, idx) => {
-          return (
-            <button
-              key={idx}
-              className={`m-0.5 outline-none border px-0.5 rounded-md ${
-                idx === currPage ? "bg-blue-500" : "rounded-full"
-              }`}
-              onClick={(e) => handleButtonClick(e, idx)}
-            >
-              {idx === 0 || idx === totalPages - 1 || idx === currPage
-                ? idx
-                : "."}
-            </button>
-          );
+          if (
+            idx === 0 ||
+            idx === totalPages - 1 ||
+            Math.abs(idx - currPage) <= 1
+          ) {
+            return (
+              <button
+                key={idx}
+                className="p-1 border ml-0.5 rounded-md"
+                onClick={() => handleButtonClick(idx)}
+              >
+                {idx}
+              </button>
+            );
+          } else if (idx === currPage - 2 || idx === currPage + 2) {
+            return <span key={idx}>...</span>;
+          } else return null;
         })}
+        <button
+          className="ml-1 border p-0.5 rounded-md"
+          onClick={() => setCurrPage((prev) => prev + 1)}
+        >
+          Next &rarr;
+        </button>
       </div>
     </div>
   );
