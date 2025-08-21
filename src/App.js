@@ -8,18 +8,27 @@ import Tree from "./Components/TreeView/Tree";
 import QrCode from "./Components/QRCode/QrCode";
 import Otp from "./Components/Otp/Otp";
 import ChipInput from "./Components/Chip Input/ChipInput";
+import TabComponent from "./Components/Tab Component/TabComponent";
+import Pagination from "./Components/Pagination/Pagination";
+import BreadCrums from "./Components/BreadCrums/BreadCrums";
+import ProductDetails from "./Components/BreadCrums/ProductDetails";
+import DropDown from "./Components/DropDown/DropDown";
 
 function App() {
   return (
     <div className="App">
       {/* <Accoridan /> */}
-      {/* <Star /> */}
+      {/* <Star  starCount={5} /> */}
       {/* <Whether /> */}
       {/* <ImageSliders /> */}
       {/* <Tree/> */}
       {/* <QrCode /> */}
       {/* <Otp  length={5} /> */}
-      <ChipInput/>
+      {/* <ChipInput/> */}
+      {/* <TabComponent/> */}
+      {/* <Pagination/> */}
+      {/* <BreadCrums/> */}
+      <DropDown/>
     </div>
   );
 }
